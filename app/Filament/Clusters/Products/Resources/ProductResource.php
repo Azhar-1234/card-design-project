@@ -20,6 +20,10 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Actions\ResetStars;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
+
 
 class ProductResource extends Resource
 {
@@ -138,8 +142,26 @@ class ProductResource extends Resource
                                     ->required(),
                                 Forms\Components\Toggle::make('is_card_enable')
                                     ->label('Card Enable')
+                                    ->reactive() // Makes the field reactive, enabling instant visibility toggling
                                     ->helperText('If you want to enable card for this table.')
                                     ->default(true),
+
+                                    Forms\Components\Actions::make([
+                                        Action::make('editWithCardBuilder')
+                                            ->label('Edit with Card Builder')
+                                            ->visible(fn ($get) => $get('is_card_enable')) // Show only if 'is_card_enable' is true
+                                            ->action(function ($record, callable $get) {
+                                                // Update 'is_card_enable' field based on its current value
+                                                $record->update(['is_card_enable' => $get('is_card_enable')]);
+                            
+                                                // Redirect to card builder page after updating
+                                                return redirect()->route('card.card-builder', ['product' => $record->id]);
+                                            })
+                                            ->color('success'),
+                                    ])
+                        
+                                
+
                             ]),
 
                         Forms\Components\Section::make('Associations')
@@ -149,10 +171,9 @@ class ProductResource extends Resource
                                     ->multiple()
                                     ->required(),
                             ]),
-                    ])
-                    ->columnSpan(['lg' => 1]),
             ])
-            ->columns(3);
+        ])
+        ->columns(3);
     }
 
     public static function table(Table $table): Table
