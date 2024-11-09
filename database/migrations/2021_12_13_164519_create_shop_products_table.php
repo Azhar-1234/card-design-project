@@ -25,8 +25,12 @@ return new class extends Migration
             $table->boolean('featured')->default(false);
             $table->boolean('is_visible')->default(false);
             $table->boolean('is_card_enable')->default(false);
-            $table->decimal('old_price', 10, 2)->nullable();
-            $table->decimal('price', 10, 2)->nullable();
+            $table->decimal('small_price_discount', 10, 2)->nullable();
+            $table->decimal('medium_price_discount', 10, 2)->nullable();
+            $table->decimal('large_price_discount', 10, 2)->nullable();
+            $table->decimal('small_price', 10, 2)->nullable();
+            $table->decimal('medium_price', 10, 2)->nullable();
+            $table->decimal('large_price', 10, 2)->nullable();
             $table->decimal('cost', 10, 2)->nullable();
             $table->enum('type', ['deliverable', 'downloadable'])->nullable();
             $table->boolean('backorder')->default(false);

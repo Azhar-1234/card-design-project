@@ -23,7 +23,9 @@ class ProductStats extends BaseWidget
         return [
             Stat::make('Total Products', $this->getPageTableQuery()->count()),
             Stat::make('Product Inventory', $this->getPageTableQuery()->sum('qty')),
-            Stat::make('Average price', number_format($this->getPageTableQuery()->avg('price'), 2)),
+            Stat::make('Average small size price', number_format($this->getPageTableQuery()->avg('small_price'), 2)),
+            Stat::make('Average medium size price', number_format($this->getPageTableQuery()->avg('medium_price'), 2)),
+            Stat::make('Average large size price', number_format($this->getPageTableQuery()->avg('large_price'), 2)),
         ];
     }
 }

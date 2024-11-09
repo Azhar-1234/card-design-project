@@ -83,13 +83,31 @@ class ProductResource extends Resource
 
                         Forms\Components\Section::make('Pricing')
                             ->schema([
-                                Forms\Components\TextInput::make('price')
+                                Forms\Components\TextInput::make('small_price')
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                                    ->required(),
+                                Forms\Components\TextInput::make('medium_price')
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                                    ->required(),
+                                Forms\Components\TextInput::make('large_price')
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->required(),
 
-                                Forms\Components\TextInput::make('old_price')
-                                    ->label('Compare at price')
+                                Forms\Components\TextInput::make('small_price_discount')
+                                    ->label('Small size discount %')
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                                    ->required(),
+                                Forms\Components\TextInput::make('medium_price_discount')
+                                    ->label('Medium size discount %')
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                                    ->required(),
+                                Forms\Components\TextInput::make('large_price_discount')
+                                    ->label('Large size discount %')
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->required(),
@@ -178,7 +196,6 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
-
         return $table
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
@@ -201,8 +218,16 @@ class ProductResource extends Resource
                     ->trueColor('primary')
                     ->falseColor('warning'),
 
-                Tables\Columns\TextColumn::make('price')
-                    ->label('Price')
+                Tables\Columns\TextColumn::make('small_price')
+                    ->label('small size price')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('medium_price')
+                    ->label('medium size price')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('small_price')
+                    ->label('large size price')
                     ->searchable()
                     ->sortable(),
 
@@ -239,13 +264,23 @@ class ProductResource extends Resource
                         TextConstraint::make('sku')
                             ->label('SKU (Stock Keeping Unit)'),
                         TextConstraint::make('description'),
-                        NumberConstraint::make('old_price')
-                            ->label('Compare at price')
+                        NumberConstraint::make('small_price_discount')
+                            ->label('Small size discount')
                             ->icon('heroicon-m-currency-dollar'),
-                        NumberConstraint::make('price')
+                        NumberConstraint::make('medium_price_discount')
+                            ->label('Medium size discount')
                             ->icon('heroicon-m-currency-dollar'),
-                        NumberConstraint::make('cost')
-                            ->label('Cost per item')
+                        NumberConstraint::make('large_price_discount')
+                            ->label('Large size discount')
+                            ->icon('heroicon-m-currency-dollar'),
+                        NumberConstraint::make('small_price')
+                            ->label('Small size price')
+                            ->icon('heroicon-m-currency-dollar'),
+                        NumberConstraint::make('medium_price')
+                            ->label('Medium size price')
+                            ->icon('heroicon-m-currency-dollar'),
+                        NumberConstraint::make('large_price')
+                            ->label('Large size price')
                             ->icon('heroicon-m-currency-dollar'),
                         NumberConstraint::make('qty')
                             ->label('Quantity'),
