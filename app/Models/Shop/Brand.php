@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Laravel\Scout\Searchable;
 
 class Brand extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
-
+    use Searchable;
     /**
      * @var string
      */

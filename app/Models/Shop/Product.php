@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-
+use Laravel\Scout\Searchable;
 class Product extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
-
+    use Searchable;
     /**
      * @var string
      */

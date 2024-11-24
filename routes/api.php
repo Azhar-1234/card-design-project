@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryProductController;
 use App\Http\Controllers\Api\EnableCardProductController;
+use App\Http\Controllers\Api\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('categories/{category:slug}/products', [CategoryProductController::class, 'index']);
 Route::get('enabled-card-products/product/{id}', [EnableCardProductController::class, 'show']);
+Route::get('/search', [SearchController::class, 'globalSearch']);
